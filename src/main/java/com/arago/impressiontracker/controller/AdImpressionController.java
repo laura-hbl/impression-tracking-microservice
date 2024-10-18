@@ -20,7 +20,7 @@ public class AdImpressionController {
     @PostMapping("/{adId}")
     public ResponseEntity<Void> trackAd(@PathVariable("adId") final String adId) {
 
-        adImpressionService.trackImpression(adId);
+        adImpressionService.trackAdImpression(adId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

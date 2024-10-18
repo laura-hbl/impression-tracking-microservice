@@ -16,6 +16,6 @@ class ImpressionTrackerApplicationTests {
 	@Disabled
 	void integrationTestRedis() {
 		// Created test to manually check object creation in redis server
-		adImpressionService.trackImpression("30af5efc-1dd8-4992-b7bd-105180728309");
+		adImpressionService.trackAdImpression("30af5efc-1dd8-4992-b7bd-105180728309");
 	}
 }

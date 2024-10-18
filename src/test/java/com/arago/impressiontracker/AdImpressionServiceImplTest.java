@@ -24,22 +24,22 @@ public class AdImpressionServiceImplTest {
     private AdImpressionRepository adImpressionRepository;
 
     @Test
-    public void givenAnAdId_whenTrackImpressionAndNoAdFound_thenSaveNewImpression() {
+    public void givenAnAdId_whenTrackImpressionAndNoAdFound_thenSaveNewAdImpression() {
         String adId = "30af5efc-1dd8-4992-b7bd-10518072830";
 
-        adImpressionService.trackImpression(adId);
+        adImpressionService.trackAdImpression(adId);
 
         AdImpression expectedAdImpression = new AdImpression("30af5efc-1dd8-4992-b7bd-10518072830", 1);
         verify(adImpressionRepository).save(expectedAdImpression);
     }
 
     @Test
-    public void givenAnAdId_whenTrackImpressionAndAdFound_thenIncrementAndSave() {
+    public void givenAnAdId_whenTrackAdImpressionAndAdFound_thenIncrementAndSave() {
         String adId = "30af5efc-1dd8-4992-b7bd-10518072830";
         AdImpression adImpression = new AdImpression(adId, 1);
         when(adImpressionRepository.findById(adId)).thenReturn(Optional.of(adImpression));
 
-        adImpressionService.trackImpression(adId);
+        adImpressionService.trackAdImpression(adId);
 
         AdImpression expectedAdImpression = new AdImpression(adId, 2);
         verify(adImpressionRepository).save(expectedAdImpression);

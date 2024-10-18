@@ -2,11 +2,15 @@ package com.arago.impressiontracker.service;
 
 import com.arago.impressiontracker.model.AdImpression;
 import com.arago.impressiontracker.repository.AdImpressionRepository;
+import com.arago.tracking.TrackAdImpressionRequest;
+import com.arago.tracking.TrackAdImpressionResponse;
+import com.arago.tracking.TrackingServiceGrpc;
+import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class AdImpressionServiceImpl implements AdImpressionService {
+@GrpcService
+public class AdImpressionServiceImpl extends TrackingServiceGrpc.TrackingServiceImplBase implements AdImpressionService {
 
     private final AdImpressionRepository adImpressionRepository;
 
@@ -16,7 +20,17 @@ public class AdImpressionServiceImpl implements AdImpressionService {
     }
 
     @Override
-    public void trackImpression(final String adId) {
+    public void trackAdImpression(TrackAdImpressionRequest request, StreamObserver<TrackAdImpressionResponse> responseObserver) {
+        trackAdImpression(request.getAdId());
+        responseObserver.onNext(TrackAdImpressionResponse.newBuilder()
+                .setSuccess(true)
+                .setMessage("incremented")
+                .build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void trackAdImpression(final String adId) {
 
         // if adImpression with this ad id exist in db, return the objet, else create a new one
         AdImpression adImpression = adImpressionRepository.findById(adId)
