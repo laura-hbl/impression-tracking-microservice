@@ -2,5 +2,5 @@ package com.arago.impressiontracker.service;
 
 public interface AdImpressionService {
 
-    void trackAdImpression(String adId);
+    Long trackAdImpression(String adId);
 }

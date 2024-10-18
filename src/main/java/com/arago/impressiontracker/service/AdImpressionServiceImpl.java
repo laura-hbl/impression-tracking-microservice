@@ -21,24 +21,28 @@ public class AdImpressionServiceImpl extends TrackingServiceGrpc.TrackingService
 
     @Override
     public void trackAdImpression(TrackAdImpressionRequest request, StreamObserver<TrackAdImpressionResponse> responseObserver) {
-        trackAdImpression(request.getAdId());
+        String adId = request.getAdId();
+        long count = trackAdImpression(adId);
+
         responseObserver.onNext(TrackAdImpressionResponse.newBuilder()
                 .setSuccess(true)
-                .setMessage("incremented")
+                .setMessage("Incremented impression count for adId: %s with count %d".formatted(adId, count))
                 .build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void trackAdImpression(final String adId) {
+    public Long trackAdImpression(final String adId) {
 
         // if adImpression with this ad id exist in db, return the objet, else create a new one
         AdImpression adImpression = adImpressionRepository.findById(adId)
                 .orElseGet(() -> new AdImpression(adId, 0));
 
         // Increment the impression count
-        adImpression.setImpressionCount(adImpression.getImpressionCount() + 1);
+        long impressionCount = adImpression.getImpressionCount() + 1;
+        adImpression.setImpressionCount(impressionCount);
 
         adImpressionRepository.save(adImpression);
+        return impressionCount;
     }
 }
