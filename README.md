@@ -24,7 +24,7 @@ Before running the project, ensure you have the following installed:
 
 Both microservices use Redis for data storage and retrieval.
 
-## Communication - gRPC
+## Communication - gRPC & REST
 
 The microservices communicate using **gRPC** for internal service-to-service communication, while external requests are managed through **REST**.
 The protocol buffers (defined in .proto files) are located in the src/main/proto directory.
@@ -87,7 +87,7 @@ To run the microservices on your local machine, follow these steps for each repo
    ```bash
    mvn spring-boot:run
    ```
-5. The impression-tracking microservice will run on `http://localhost:8081` and the redis server listen on port 9090.
+5. The impression-tracking microservice will run on `http://localhost:8081` and gRPC calls will be received on port 9090.
 
 ## API Endpoints
 
@@ -145,7 +145,7 @@ To run the microservices on your local machine, follow these steps for each repo
       "url": "http://example.com"
      }
      ```
-     
+
 ### Impression-Tracking Microservice
 
 1. **Increment the ad impression count**
