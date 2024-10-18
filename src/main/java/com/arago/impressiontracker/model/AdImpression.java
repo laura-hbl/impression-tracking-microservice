@@ -5,6 +5,9 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Objects;
 
+/**
+ * Ad impression entity.
+ */
 @RedisHash("adimpression")
 public class AdImpression {
 

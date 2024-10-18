@@ -9,6 +9,10 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * Implementation of the AdImpressionService interface.
+ * It handles tracking ad impressions using gRPC.
+ */
 @GrpcService
 public class AdImpressionServiceImpl extends TrackingServiceGrpc.TrackingServiceImplBase implements AdImpressionService {
 
@@ -19,6 +23,12 @@ public class AdImpressionServiceImpl extends TrackingServiceGrpc.TrackingService
         this.adImpressionRepository = adImpressionRepository;
     }
 
+    /**
+     * Handles the gRPC request to track an ad impression.
+     *
+     * @param request          the request containing the ad id
+     * @param responseObserver the observer for sending the response
+     */
     @Override
     public void trackAdImpression(TrackAdImpressionRequest request, StreamObserver<TrackAdImpressionResponse> responseObserver) {
         String adId = request.getAdId();
@@ -31,6 +41,14 @@ public class AdImpressionServiceImpl extends TrackingServiceGrpc.TrackingService
         responseObserver.onCompleted();
     }
 
+    /**
+     * Tracks the impression count for a given ad id.
+     * If an ad impression exists with this ad id, it increments the count;
+     * otherwise, it creates a new one.
+     *
+     * @param adId the id of the ad for which to track impressions
+     * @return the updated impression count
+     */
     @Override
     public Long trackAdImpression(final String adId) {
 
